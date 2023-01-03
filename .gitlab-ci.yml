@@ -1,0 +1,20 @@
+image: registry.gitlab.com/mafda/python-linting
+
+stages:
+    - formatting
+    - linting
+
+isosort:
+    stage: formatting
+    script:
+        - isort **/*.py --check-only
+
+black:
+    stage: formatting
+    script:
+        - black --line-length=101 --check .
+
+flake8:
+    stage: linting
+    script:
+        - flake8 --max-line-length=101 --ignore=E402,F841,F401,E302,E305,E203,W503,C901,F403,F405 . || pflake8
